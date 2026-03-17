@@ -42,6 +42,10 @@ const VOICES = {
 // ===== Edge TTS 服务端 API =====
 const TTS_API_URL = '/api/tts';
 
+// ===== 限制配置 =====
+const MAX_TEXT_LENGTH = 1000;
+const MAX_REQUESTS_PER_HOUR = 10;
+
 // ===== 全局状态 =====
 let currentAudioBlob = null;
 let audioPlayer = null;
@@ -114,8 +118,16 @@ function initSliders() {
 function initTextarea() {
     const textarea = document.getElementById('textInput');
     const charCount = document.getElementById('charCount');
+    textarea.setAttribute('maxlength', MAX_TEXT_LENGTH);
     textarea.addEventListener('input', function () {
-        charCount.textContent = this.value.length;
+        const len = this.value.length;
+        charCount.textContent = len;
+        const counter = charCount.parentElement;
+        if (len >= MAX_TEXT_LENGTH) {
+            counter.classList.add('char-limit');
+        } else {
+            counter.classList.remove('char-limit');
+        }
     });
 }
 
@@ -229,11 +241,45 @@ function synthesizeWithWebSpeech(text, voice, rate, pitch) {
     });
 }
 
+// ===== 频次限制 =====
+function getRequestLog() {
+    try {
+        return JSON.parse(localStorage.getItem('tts_requests') || '[]');
+    } catch (e) {
+        return [];
+    }
+}
+
+function recordRequest() {
+    const log = getRequestLog();
+    log.push(Date.now());
+    localStorage.setItem('tts_requests', JSON.stringify(log));
+}
+
+function getRecentRequestCount() {
+    const oneHourAgo = Date.now() - 3600000;
+    const log = getRequestLog().filter(function (ts) { return ts > oneHourAgo; });
+    // 顺便清理过期记录
+    localStorage.setItem('tts_requests', JSON.stringify(log));
+    return log.length;
+}
+
 // ===== 主合成流程 =====
 async function synthesize() {
     const text = document.getElementById('textInput').value.trim();
     if (!text) {
         showError('请输入要转换的文本内容');
+        return;
+    }
+
+    if (text.length > MAX_TEXT_LENGTH) {
+        showError('文本内容不能超过 ' + MAX_TEXT_LENGTH + ' 字');
+        return;
+    }
+
+    const usedCount = getRecentRequestCount();
+    if (usedCount >= MAX_REQUESTS_PER_HOUR) {
+        showError('已达到每小时 ' + MAX_REQUESTS_PER_HOUR + ' 次的转换限制，请稍后再试');
         return;
     }
 
@@ -250,6 +296,7 @@ async function synthesize() {
         const blob = await callEdgeTTS(text, voice, rate, pitch);
         currentAudioBlob = blob;
         currentEngine = 'edge';
+        recordRequest();
         showEngineNotice('edge');
         playAudioBlob(blob);
         enablePlaybackButtons();
@@ -267,6 +314,7 @@ async function synthesize() {
 
             const result = await synthesizeWithWebSpeech(text, voice, rate, pitch);
             if (result === 'webSpeech') {
+                recordRequest();
                 // Web Speech 正在播放
                 document.getElementById('stopBtn').disabled = false;
                 document.getElementById('downloadBtn').disabled = true;

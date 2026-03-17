@@ -149,6 +149,12 @@ header h1 {
     margin-top: 8px;
     font-size: 0.85em;
     color: #65676b;
+    transition: color 0.2s;
+}
+
+.char-count.char-limit {
+    color: #c41c00;
+    font-weight: 600;
 }
 
 /* 语音设置网格 */
