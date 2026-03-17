@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文本转语音在线工具 - 免费TTS语音合成</title>
+    <meta name="description" content="免费在线文本转语音工具，支持中文、英文、日文、韩文等多种语言，使用微软Edge TTS语音合成技术，可下载MP3音频文件。">
+    <meta name="keywords" content="文本转语音,TTS,语音合成,Edge TTS,在线朗读,MP3下载">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <nav class="top-nav">
+            <ul>
+                <li><a href="index.html" class="active">首页</a></li>
+                <li><a href="about.html">关于</a></li>
+            </ul>
+        </nav>
+
+        <header>
+            <h1>文本转语音在线工具</h1>
+            <p class="subtitle">输入文本，选择语音，一键生成自然流畅的语音音频</p>
+        </header>
+
+        <!-- 文本输入区 -->
+        <div class="card">
+            <div class="textarea-wrapper">
+                <textarea
+                    id="textInput"
+                    placeholder="请输入要转换为语音的文本内容..."
+                    rows="6"
+                ></textarea>
+                <div class="char-count">
+                    <span id="charCount">0</span> 字
+                </div>
+            </div>
+        </div>
+
+        <!-- 语音设置区 -->
+        <div class="card">
+            <h3 class="card-title">语音设置</h3>
+            <div class="settings-grid">
+                <div class="setting-item">
+                    <label for="langSelect">语言</label>
+                    <select id="langSelect"></select>
+                </div>
+                <div class="setting-item">
+                    <label for="voiceSelect">语音角色</label>
+                    <select id="voiceSelect"></select>
+                </div>
+                <div class="setting-item">
+                    <label for="rateRange">语速：<span id="rateValue">1.0x</span></label>
+                    <input type="range" id="rateRange" min="0.5" max="2.0" step="0.1" value="1.0">
+                </div>
+                <div class="setting-item">
+                    <label for="pitchRange">音调：<span id="pitchValue">0%</span></label>
+                    <input type="range" id="pitchRange" min="-50" max="50" step="5" value="0">
+                </div>
+            </div>
+        </div>
+
+        <!-- 控制区 -->
+        <div class="controls">
+            <button id="synthesizeBtn" class="btn-primary" onclick="synthesize()">
+                <span class="btn-text">开始转换</span>
+            </button>
+            <button id="playBtn" class="btn-secondary" onclick="togglePlay()" disabled>
+                <span class="btn-text">播放</span>
+            </button>
+            <button id="stopBtn" class="btn-secondary" onclick="stopAudio()" disabled>
+                <span class="btn-text">停止</span>
+            </button>
+            <button id="downloadBtn" class="btn-secondary" onclick="downloadAudio()" disabled>
+                <span class="btn-text">下载 MP3</span>
+            </button>
+        </div>
+
+        <!-- 加载提示 -->
+        <div id="loading" class="loading" style="display: none;">
+            <div class="spinner"></div>
+            <p>正在合成语音，请稍候...</p>
+        </div>
+
+        <!-- 错误提示 -->
+        <div id="error" class="error" style="display: none;"></div>
+
+        <!-- 引擎提示 -->
+        <div id="engineNotice" class="engine-notice" style="display: none;"></div>
+
+        <!-- 音频播放区 -->
+        <div id="audioSection" class="card audio-section" style="display: none;">
+            <h3 class="card-title">合成结果</h3>
+            <audio id="audioPlayer" controls></audio>
+        </div>
+
+        <!-- 使用说明 -->
+        <div class="instructions">
+            <h3>使用说明</h3>
+            <ul>
+                <li>在文本框中输入要转换的文字内容（支持中文、英文、日文、韩文等）</li>
+                <li>选择目标语言和喜欢的语音角色</li>
+                <li>调节语速和音调参数（可选）</li>
+                <li>点击"开始转换"按钮生成语音</li>
+                <li>转换完成后可在线播放或下载 MP3 文件</li>
+            </ul>
+            <div class="api-notice">
+                <strong>提示：</strong>请使用 <code>python server.py</code> 启动本地服务（需先安装依赖：<code>pip install edge-tts</code>）。如服务端不可用，将自动切换到浏览器内置语音引擎。
+            </div>
+        </div>
+
+        <footer>
+            <p>语音技术：Microsoft Edge TTS</p>
+            <p>&copy; 2025 文本转语音在线工具 | <a href="about.html">关于我们</a> | <a href="privacy.html">隐私政策</a></p>
+        </footer>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

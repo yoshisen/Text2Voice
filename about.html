@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>关于我们 - 文本转语音在线工具</title>
+    <meta name="description" content="了解文本转语音在线工具，一个免费、高质量的TTS语音合成服务。">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <nav class="top-nav">
+            <ul>
+                <li><a href="index.html">首页</a></li>
+                <li><a href="about.html" class="active">关于</a></li>
+            </ul>
+        </nav>
+
+        <header>
+            <h1>关于我们</h1>
+            <p class="subtitle">免费、高质量的在线文本转语音工具</p>
+        </header>
+
+        <div class="content-section">
+            <div class="about-section">
+                <h2>项目简介</h2>
+                <p>文本转语音在线工具是一个免费的在线TTS服务，基于微软 Edge TTS 语音合成技术，可将文本内容转换为自然流畅的语音音频。支持多种语言和语音角色，生成的音频可直接在线播放或下载为 MP3 文件。</p>
+            </div>
+
+            <div class="about-section">
+                <h2>核心功能</h2>
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <div class="feature-icon">🗣️</div>
+                        <h3>高质量语音</h3>
+                        <p>使用微软 Neural TTS 技术，生成接近真人的自然语音。</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🌍</div>
+                        <h3>多语言支持</h3>
+                        <p>支持中文、英文、日文、韩文等多种语言和语音角色。</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🎛️</div>
+                        <h3>参数调节</h3>
+                        <p>自由调节语速和音调，定制最适合的语音效果。</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">💾</div>
+                        <h3>MP3 下载</h3>
+                        <p>合成的音频可直接下载为 MP3 文件，方便离线使用。</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🔄</div>
+                        <h3>双引擎备用</h3>
+                        <p>Edge TTS 不可用时自动切换到浏览器内置语音引擎。</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">📱</div>
+                        <h3>响应式设计</h3>
+                        <p>支持桌面、平板和手机等多种设备，随时随地使用。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="about-section">
+                <h2>使用场景</h2>
+                <ul class="use-cases">
+                    <li><strong>内容创作：</strong>为视频、播客、有声读物快速生成旁白和配音。</li>
+                    <li><strong>语言学习：</strong>听取标准发音，辅助外语学习和口语练习。</li>
+                    <li><strong>无障碍阅读：</strong>将长文本转为语音，方便视障人士或阅读不便时收听。</li>
+                    <li><strong>办公辅助：</strong>将文档、邮件内容转为语音，解放双眼、提高效率。</li>
+                    <li><strong>开发测试：</strong>测试语音合成集成，验证 TTS 功能效果。</li>
+                </ul>
+            </div>
+
+            <div class="about-section">
+                <h2>技术说明</h2>
+                <p>本工具基于以下技术构建：</p>
+                <ul>
+                    <li><strong>语音引擎：</strong>主要使用 Microsoft Edge TTS（Neural 语音合成），通过 WebSocket 直连微软语音服务。</li>
+                    <li><strong>备用引擎：</strong>当 Edge TTS 不可用时，自动切换到浏览器内置的 Web Speech API。</li>
+                    <li><strong>前端技术：</strong>使用 HTML5、CSS3 和原生 JavaScript 开发，无需后端服务器。</li>
+                    <li><strong>音频格式：</strong>Edge TTS 输出 MP3 格式音频（24kHz，48kbps）。</li>
+                    <li><strong>响应式设计：</strong>支持桌面、平板和手机等多种设备访问。</li>
+                </ul>
+            </div>
+
+            <div class="about-section">
+                <h2>免责声明</h2>
+                <div class="disclaimer">
+                    <ul>
+                        <li>本工具使用微软 Edge TTS 公开接口，仅供个人学习和非商业用途。</li>
+                        <li>语音合成质量和可用性取决于微软服务状态，本工具不保证服务持续可用。</li>
+                        <li>请勿使用合成语音进行欺诈、冒充他人或其他违法活动。</li>
+                        <li>本工具不对因使用本服务而产生的任何直接或间接损失承担责任。</li>
+                        <li>用户应自行遵守所在地区的法律法规。</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="about-section">
+                <h2>更新日志</h2>
+                <div class="changelog">
+                    <div class="changelog-item">
+                        <h4>v2.0.0 (2025年)</h4>
+                        <ul>
+                            <li>全面改版为文本转语音工具</li>
+                            <li>集成 Microsoft Edge TTS 语音合成</li>
+                            <li>支持中/英/日/韩多语言语音</li>
+                            <li>支持语速和音调调节</li>
+                            <li>支持 MP3 音频下载</li>
+                            <li>添加 Web Speech API 备用方案</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="about-section">
+                <h2>联系方式</h2>
+                <p>如果您有任何问题、建议或反馈，欢迎通过以下方式联系我们：</p>
+                <ul>
+                    <li>如有技术问题或建议，请通过 GitHub Issues 反馈</li>
+                    <li>如果您觉得本工具有用，欢迎分享给更多人</li>
+                    <li>隐私相关问题请查看我们的 <a href="privacy.html">隐私政策</a></li>
+                </ul>
+            </div>
+
+            <div class="about-section">
+                <h2>致谢</h2>
+                <p>感谢以下服务和项目：</p>
+                <ul>
+                    <li>Microsoft Edge TTS - 提供高质量的 Neural 语音合成服务</li>
+                    <li>Web Speech API - 提供浏览器原生语音合成能力</li>
+                    <li>所有使用和支持本工具的用户</li>
+                </ul>
+            </div>
+
+            <div class="back-link">
+                <a href="index.html">&larr; 返回首页</a>
+            </div>
+        </div>
+
+        <footer>
+            <p>&copy; 2025 文本转语音在线工具 | <a href="about.html">关于我们</a> | <a href="privacy.html">隐私政策</a></p>
+        </footer>
+    </div>
+</body>
+</html>
