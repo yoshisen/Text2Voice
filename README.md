@@ -64,7 +64,7 @@ web_text2voice/
 ├── index.html          # 主页面
 ├── about.html          # 关于页面
 ├── privacy.html        # 隐私政策页面
-├── server.py           # Flask 后端服务（静态文件 + TTS API）
+├── server.py           # Flask 后端服务 
 ├── css/
 │   └── style.css       # 样式文件
 ├── js/
@@ -129,29 +129,7 @@ Microsoft Edge TTS 服务
 }
 ```
 
-## 生产环境部署
-
-
-启动服务
-
-```linux
- nohup python3.8 server.py > server.log 2>&1 &
-```
-
-### 使用 Nginx 反向代理
-
-```nginx
-server {
-    listen 80;
-    server_name your-domain.com;
-
-    location / {
-        proxy_pass http://127.0.0.1:8000;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-    }
-}
-```
+ 
 
 
 
