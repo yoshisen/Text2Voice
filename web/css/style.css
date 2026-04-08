@@ -17,7 +17,7 @@ body {
     margin: 0 auto;
 }
 
-/* 顶部导航样式 */
+/* Top navigation styles */
 .top-nav {
     background: white;
     border-radius: 8px;
@@ -73,7 +73,7 @@ body {
     border-radius: 2px 2px 0 0;
 }
 
-/* 头部样式 */
+/* Header styles */
 header {
     text-align: center;
     background: white;
@@ -97,7 +97,7 @@ header h1 {
     font-weight: 400;
 }
 
-/* 通用卡片 */
+/* Shared card styles */
 .card {
     background: white;
     border-radius: 8px;
@@ -113,7 +113,7 @@ header h1 {
     margin-bottom: 16px;
 }
 
-/* 文本输入区 */
+/* Text input area */
 .textarea-wrapper {
     position: relative;
 }
@@ -157,7 +157,7 @@ header h1 {
     font-weight: 600;
 }
 
-/* 语音设置网格 */
+/* Voice settings grid */
 .settings-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -194,7 +194,7 @@ header h1 {
     background: white;
 }
 
-/* 滑块样式 */
+/* Slider styles */
 input[type="range"] {
     -webkit-appearance: none;
     appearance: none;
@@ -235,7 +235,7 @@ input[type="range"]::-moz-range-thumb:hover {
     background: #166fe5;
 }
 
-/* 控制按钮区 */
+/* Control button area */
 .controls {
     display: flex;
     gap: 12px;
@@ -294,7 +294,7 @@ input[type="range"]::-moz-range-thumb:hover {
     cursor: not-allowed;
 }
 
-/* 加载动画 */
+/* Loading animation */
 .loading {
     background: white;
     border-radius: 8px;
@@ -323,7 +323,7 @@ input[type="range"]::-moz-range-thumb:hover {
     100% { transform: rotate(360deg); }
 }
 
-/* 错误提示 */
+/* Error message */
 .error {
     background: #ffebe9;
     border: 1px solid #f02849;
@@ -335,7 +335,7 @@ input[type="range"]::-moz-range-thumb:hover {
     font-size: 0.9em;
 }
 
-/* 引擎提示 */
+/* Engine notice */
 .engine-notice {
     background: #e7f3ff;
     border: 1px solid #1877f2;
@@ -348,7 +348,7 @@ input[type="range"]::-moz-range-thumb:hover {
     font-weight: 500;
 }
 
-/* 音频播放区 */
+/* Audio playback area */
 .audio-section {
     animation: fadeIn 0.3s;
 }
@@ -370,7 +370,7 @@ input[type="range"]::-moz-range-thumb:hover {
     border-radius: 6px;
 }
 
-/* 使用说明 */
+/* Usage instructions */
 .instructions {
     background: white;
     border-radius: 8px;
@@ -458,7 +458,7 @@ input[type="range"]::-moz-range-thumb:hover {
     color: #050505;
 }
 
-/* 常见问题 */
+/* FAQ */
 .faq-section {
     background: white;
     border-radius: 8px;
@@ -549,7 +549,7 @@ input[type="range"]::-moz-range-thumb:hover {
     margin: 0;
 }
 
-/* 页脚 */
+/* Footer */
 footer {
     text-align: center;
     padding: 20px 0;
@@ -571,7 +571,7 @@ footer a:hover {
     text-decoration: underline;
 }
 
-/* 内容页面样式 (关于页面和隐私政策页面) */
+/* Content page styles (About and Privacy Policy pages) */
 .content-section {
     background: white;
     border-radius: 8px;
@@ -682,7 +682,7 @@ footer a:hover {
     background: #d8dadf;
 }
 
-/* 功能网格 */
+/* Feature grid */
 .features-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -721,7 +721,7 @@ footer a:hover {
     margin: 0;
 }
 
-/* 使用场景列表 */
+/* Use case list */
 .use-cases {
     list-style: none;
     margin: 16px 0;
@@ -739,7 +739,7 @@ footer a:hover {
     color: #1877f2;
 }
 
-/* 更新日志 */
+/* Changelog */
 .changelog {
     margin: 16px 0;
 }
@@ -761,7 +761,7 @@ footer a:hover {
     margin: 8px 0 0 20px;
 }
 
-/* 响应式设计 */
+/* Responsive design */
 @media (max-width: 768px) {
     body {
         padding: 12px;
