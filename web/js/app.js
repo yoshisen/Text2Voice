@@ -1,58 +1,54 @@
-// ===== 预定义语音列表 =====
+// ===== Predefined voice list =====
 const VOICES = {
-    'zh-CN': {
-        label: '中文(普通话)',
+    'ja-JP': {
+        label: 'Japanese',
         voices: [
-            { name: 'zh-CN-XiaoxiaoNeural', label: '晓晓', gender: '女' },
-            { name: 'zh-CN-YunxiNeural', label: '云希', gender: '男' },
-            { name: 'zh-CN-XiaoyiNeural', label: '晓伊', gender: '女' },
-            { name: 'zh-CN-YunjianNeural', label: '云健', gender: '男' },
+            { name: 'ja-JP-KeitaNeural', label: 'Keita', gender: 'Male' },
+            { name: 'ja-JP-NanamiNeural', label: 'Nanami', gender: 'Female' },
+        ]
+    },
+    'zh-CN': {
+        label: 'Chinese (Mandarin)',
+        voices: [
+            { name: 'zh-CN-XiaoxiaoNeural', label: 'Xiaoxiao', gender: 'Female' },
+            { name: 'zh-CN-YunxiNeural', label: 'Yunxi', gender: 'Male' },
+            { name: 'zh-CN-XiaoyiNeural', label: 'Xiaoyi', gender: 'Female' },
+            { name: 'zh-CN-YunjianNeural', label: 'Yunjian', gender: 'Male' },
         ]
     },
     'en-US': {
-        label: '英文(美国)',
+        label: 'English (US)',
         voices: [
-            { name: 'en-US-JennyNeural', label: 'Jenny', gender: '女' },
-            { name: 'en-US-GuyNeural', label: 'Guy', gender: '男' },
+            { name: 'en-US-JennyNeural', label: 'Jenny', gender: 'Female' },
+            { name: 'en-US-GuyNeural', label: 'Guy', gender: 'Male' },
         ]
     },
     'en-GB': {
-        label: '英文(英国)',
+        label: 'English (UK)',
         voices: [
-            { name: 'en-GB-SoniaNeural', label: 'Sonia', gender: '女' },
-            { name: 'en-GB-RyanNeural', label: 'Ryan', gender: '男' },
-        ]
-    },
-    'ja-JP': {
-        label: '日文',
-        voices: [
-            { name: 'ja-JP-NanamiNeural', label: 'Nanami', gender: '女' },
-            { name: 'ja-JP-KeitaNeural', label: 'Keita', gender: '男' },
+            { name: 'en-GB-SoniaNeural', label: 'Sonia', gender: 'Female' },
+            { name: 'en-GB-RyanNeural', label: 'Ryan', gender: 'Male' },
         ]
     },
     'ko-KR': {
-        label: '韩文',
+        label: 'Korean',
         voices: [
-            { name: 'ko-KR-SunHiNeural', label: 'SunHi', gender: '女' },
-            { name: 'ko-KR-InJoonNeural', label: 'InJoon', gender: '男' },
+            { name: 'ko-KR-SunHiNeural', label: 'SunHi', gender: 'Female' },
+            { name: 'ko-KR-InJoonNeural', label: 'InJoon', gender: 'Male' },
         ]
     }
 };
 
-// ===== Edge TTS 服务端 API =====
+// ===== Edge TTS backend API =====
 const TTS_API_URL = '/api/tts';
 
-// ===== 限制配置 =====
-const MAX_TEXT_LENGTH = 1000;
-const MAX_REQUESTS_PER_HOUR = 10;
-
-// ===== 全局状态 =====
+// ===== Global state =====
 let currentAudioBlob = null;
 let audioPlayer = null;
 let isPlaying = false;
-let currentEngine = null; // 'edge' 或 'webSpeech'
+let currentEngine = null; // 'edge' or 'webSpeech'
 
-// ===== 页面初始化 =====
+// ===== Page initialization =====
 document.addEventListener('DOMContentLoaded', function () {
     audioPlayer = document.getElementById('audioPlayer');
 
@@ -63,19 +59,19 @@ document.addEventListener('DOMContentLoaded', function () {
 
     audioPlayer.addEventListener('ended', function () {
         isPlaying = false;
-        document.getElementById('playBtn').querySelector('.btn-text').textContent = '播放';
+        document.getElementById('playBtn').querySelector('.btn-text').textContent = 'Play';
     });
     audioPlayer.addEventListener('play', function () {
         isPlaying = true;
-        document.getElementById('playBtn').querySelector('.btn-text').textContent = '暂停';
+        document.getElementById('playBtn').querySelector('.btn-text').textContent = 'Pause';
     });
     audioPlayer.addEventListener('pause', function () {
         isPlaying = false;
-        document.getElementById('playBtn').querySelector('.btn-text').textContent = '播放';
+        document.getElementById('playBtn').querySelector('.btn-text').textContent = 'Play';
     });
 });
 
-// ===== UI 初始化 =====
+// ===== UI initialization =====
 function initLanguageSelect() {
     const langSelect = document.getElementById('langSelect');
     for (const [code, lang] of Object.entries(VOICES)) {
@@ -95,7 +91,7 @@ function initVoiceSelect() {
     for (const voice of voices) {
         const option = document.createElement('option');
         option.value = voice.name;
-        option.textContent = `${voice.label}（${voice.gender}）`;
+        option.textContent = `${voice.label} (${voice.gender})`;
         voiceSelect.appendChild(option);
     }
 }
@@ -118,20 +114,13 @@ function initSliders() {
 function initTextarea() {
     const textarea = document.getElementById('textInput');
     const charCount = document.getElementById('charCount');
-    textarea.setAttribute('maxlength', MAX_TEXT_LENGTH);
+    charCount.textContent = textarea.value.length;
     textarea.addEventListener('input', function () {
-        const len = this.value.length;
-        charCount.textContent = len;
-        const counter = charCount.parentElement;
-        if (len >= MAX_TEXT_LENGTH) {
-            counter.classList.add('char-limit');
-        } else {
-            counter.classList.remove('char-limit');
-        }
+        charCount.textContent = this.value.length;
     });
 }
 
-// ===== 状态控制 =====
+// ===== State control =====
 function showLoading() {
     document.getElementById('loading').style.display = 'block';
     document.getElementById('error').style.display = 'none';
@@ -152,9 +141,9 @@ function showError(message) {
 function showEngineNotice(engine) {
     const el = document.getElementById('engineNotice');
     if (engine === 'edge') {
-        el.textContent = '当前引擎：Microsoft Edge TTS';
+        el.textContent = 'Current engine: Microsoft Edge TTS';
     } else {
-        el.textContent = '当前引擎：浏览器内置语音（Edge TTS 不可用，已自动切换）';
+        el.textContent = 'Current engine: Browser built-in speech engine (Edge TTS unavailable, switched automatically)';
     }
     el.style.display = 'block';
 }
@@ -171,9 +160,9 @@ function disablePlaybackButtons() {
     document.getElementById('downloadBtn').disabled = true;
 }
 
-// ===== Edge TTS 服务端调用 =====
+// ===== Edge TTS backend call =====
 async function callEdgeTTS(text, voice, rate, pitch) {
-    // 将滑块值转为 edge-tts 需要的格式
+    // Convert slider values to the format expected by edge-tts.
     const ratePercent = Math.round((rate - 1) * 100);
     const rateStr = (ratePercent >= 0 ? '+' : '') + ratePercent + '%';
     const pitchStr = (pitch >= 0 ? '+' : '') + pitch + 'Hz';
@@ -190,7 +179,7 @@ async function callEdgeTTS(text, voice, rate, pitch) {
     });
 
     if (!response.ok) {
-        let message = '语音合成请求失败';
+        let message = 'Speech synthesis request failed';
         try {
             const err = await response.json();
             message = err.error || message;
@@ -200,23 +189,23 @@ async function callEdgeTTS(text, voice, rate, pitch) {
 
     const blob = await response.blob();
     if (blob.size === 0) {
-        throw new Error('未收到音频数据');
+        throw new Error('No audio data received');
     }
     return blob;
 }
 
-// ===== Web Speech API 备用方案 =====
+// ===== Web Speech API fallback =====
 function synthesizeWithWebSpeech(text, voice, rate, pitch) {
     return new Promise(function (resolve, reject) {
         if (!('speechSynthesis' in window)) {
-            reject(new Error('浏览器不支持语音合成'));
+            reject(new Error('Your browser does not support speech synthesis'));
             return;
         }
 
-        // Web Speech API 不产生可下载的音频，只能在线播放
+        // Web Speech API does not produce downloadable audio and only supports live playback.
         const utterance = new SpeechSynthesisUtterance(text);
 
-        // 尝试匹配语音
+        // Try to match a browser voice.
         const voices = speechSynthesis.getVoices();
         const langCode = document.getElementById('langSelect').value;
         const matchedVoice = voices.find(function (v) {
@@ -227,59 +216,25 @@ function synthesizeWithWebSpeech(text, voice, rate, pitch) {
         }
         utterance.lang = langCode;
         utterance.rate = rate;
-        utterance.pitch = 1 + pitch / 100; // 转换为 0-2 范围
+        utterance.pitch = 1 + pitch / 100; // Convert to the 0-2 range.
 
         utterance.onend = function () {
-            resolve(null); // Web Speech 没有 blob
+            resolve(null); // Web Speech does not return a blob.
         };
         utterance.onerror = function (e) {
-            reject(new Error('语音合成失败: ' + e.error));
+            reject(new Error('Speech synthesis failed: ' + e.error));
         };
 
         speechSynthesis.speak(utterance);
-        resolve('webSpeech'); // 立即返回标记
+        resolve('webSpeech'); // Return a marker immediately.
     });
 }
 
-// ===== 频次限制 =====
-function getRequestLog() {
-    try {
-        return JSON.parse(localStorage.getItem('tts_requests') || '[]');
-    } catch (e) {
-        return [];
-    }
-}
-
-function recordRequest() {
-    const log = getRequestLog();
-    log.push(Date.now());
-    localStorage.setItem('tts_requests', JSON.stringify(log));
-}
-
-function getRecentRequestCount() {
-    const oneHourAgo = Date.now() - 3600000;
-    const log = getRequestLog().filter(function (ts) { return ts > oneHourAgo; });
-    // 顺便清理过期记录
-    localStorage.setItem('tts_requests', JSON.stringify(log));
-    return log.length;
-}
-
-// ===== 主合成流程 =====
+// ===== Main synthesis flow =====
 async function synthesize() {
     const text = document.getElementById('textInput').value.trim();
     if (!text) {
-        showError('请输入要转换的文本内容');
-        return;
-    }
-
-    if (text.length > MAX_TEXT_LENGTH) {
-        showError('文本内容不能超过 ' + MAX_TEXT_LENGTH + ' 字');
-        return;
-    }
-
-    const usedCount = getRecentRequestCount();
-    if (usedCount >= MAX_REQUESTS_PER_HOUR) {
-        showError('已达到每小时 ' + MAX_REQUESTS_PER_HOUR + ' 次的转换限制，请稍后再试');
+        showError('Please enter the text you want to convert');
         return;
     }
 
@@ -292,44 +247,42 @@ async function synthesize() {
     document.getElementById('engineNotice').style.display = 'none';
 
     try {
-        // 尝试 Edge TTS
+        // Try Edge TTS first.
         const blob = await callEdgeTTS(text, voice, rate, pitch);
         currentAudioBlob = blob;
         currentEngine = 'edge';
-        recordRequest();
         showEngineNotice('edge');
         playAudioBlob(blob);
         enablePlaybackButtons();
 
-        // 显示音频区
+        // Show the audio section.
         document.getElementById('audioSection').style.display = 'block';
     } catch (edgeError) {
-        console.warn('Edge TTS 服务端调用失败，切换到 Web Speech API:', edgeError);
+        console.warn('Edge TTS backend call failed, switching to Web Speech API:', edgeError);
 
         try {
-            // 备用方案：Web Speech API
+            // Fallback: Web Speech API
             currentAudioBlob = null;
             currentEngine = 'webSpeech';
             showEngineNotice('webSpeech');
 
             const result = await synthesizeWithWebSpeech(text, voice, rate, pitch);
             if (result === 'webSpeech') {
-                recordRequest();
-                // Web Speech 正在播放
+                // Web Speech is now playing.
                 document.getElementById('stopBtn').disabled = false;
                 document.getElementById('downloadBtn').disabled = true;
                 document.getElementById('playBtn').disabled = true;
                 document.getElementById('audioSection').style.display = 'none';
             }
         } catch (webError) {
-            showError('语音合成失败：请确认已运行 python server.py 启动服务端。浏览器内置语音引擎也不可用，请尝试使用 Chrome/Edge 浏览器。');
+            showError('Speech synthesis failed. Make sure the backend is running with python server.py. The browser built-in speech engine is also unavailable. Please try Chrome or Edge.');
         }
     } finally {
         hideLoading();
     }
 }
 
-// ===== 音频播放 =====
+// ===== Audio playback =====
 function playAudioBlob(blob) {
     const url = URL.createObjectURL(blob);
     audioPlayer.src = url;
@@ -366,14 +319,14 @@ function stopAudio() {
         audioPlayer.pause();
         audioPlayer.currentTime = 0;
         isPlaying = false;
-        document.getElementById('playBtn').querySelector('.btn-text').textContent = '播放';
+        document.getElementById('playBtn').querySelector('.btn-text').textContent = 'Play';
     }
 }
 
-// ===== 下载功能 =====
+// ===== Download feature =====
 function downloadAudio() {
     if (!currentAudioBlob) {
-        showError('没有可下载的音频文件（浏览器内置引擎不支持下载）');
+        showError('No downloadable audio file is available (the browser built-in engine does not support downloads)');
         return;
     }
 
@@ -381,7 +334,7 @@ function downloadAudio() {
     const a = document.createElement('a');
     a.href = url;
 
-    // 用文本前几个字做文件名
+    // Use the first few characters of the text as the file name.
     const text = document.getElementById('textInput').value.trim();
     const fileName = text.substring(0, 20).replace(/[^\w\u4e00-\u9fff]/g, '_') || 'tts_audio';
     a.download = fileName + '.mp3';
